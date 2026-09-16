@@ -2,6 +2,7 @@ import express, { json } from "express";
 import { connectDB } from "./config/db.js";
 import { envObj } from "./config/envConfig.js";
 import productRoute from "./routes/product.js";
+import userRoute from "./routes/user.js";
 
 const app = express();
 app.use(json());
@@ -91,38 +92,40 @@ const product = [
 
 app.use("/products", productRoute);
 
+app.use("/auth", userRoute);
+
 app.get("/", (req, res) => {
   res.send("Hello, welcome to August app");
 });
 
-app.get("/products", (req, res) => {
-  res.send(product);
-});
+// app.get("/products", (req, res) => {
+//   res.send(product);
+// });
 
-app.post("/products", (req, res) => {
-  console.log(req.body);
-  // const title = req.body.title
-  const { title, id, price, description, category, image, rating } = req.body;
-  if (
-    !title ||
-    !id ||
-    !price ||
-    !description ||
-    !category ||
-    !image ||
-    !rating
-  ) {
-    return res
-      .status(400)
-      .json({ status: false, message: "All Field Are required" });
-  }
-  product.push(req.body);
-  return res.status(200).json({
-    message: "Product Added Successfully",
-    product,
-    length: product.length,
-  });
-});
+// app.post("/products", (req, res) => {
+//   console.log(req.body);
+//   // const title = req.body.title
+//   const { title, id, price, description, category, image, rating } = req.body;
+//   if (
+//     !title ||
+//     !id ||
+//     !price ||
+//     !description ||
+//     !category ||
+//     !image ||
+//     !rating
+//   ) {
+//     return res
+//       .status(400)
+//       .json({ status: false, message: "All Field Are required" });
+//   }
+//   product.push(req.body);
+//   return res.status(200).json({
+//     message: "Product Added Successfully",
+//     product,
+//     length: product.length,
+//   });
+// });
 
 connectDB();
 app.listen(envObj.port, () => {

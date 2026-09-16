@@ -45,4 +45,3 @@ const productSchema = new mongoose.Schema({
 )
 
 export default mongoose.model("product", productSchema);
-// module.exports = mongoose.model("product", productSchema);
