@@ -1,5 +1,6 @@
 import User from '../models/user.js';
 import bcrypt from 'bcrypt';
+import { userODM } from '../utils/userODM.js';
 
 export const registerUser = async (req, res) => {
     try {
@@ -51,8 +52,8 @@ export const loginUser = async (req, res) => {
             return res.status(400).json({ status: "false", message: "Invalid credentials" });
         }
 
-        return res.status(200).json({ status: "true", message: "Login successful", user: { firstName: user.firstName, lastName: user.lastName, email: user.email, phoneNumber: user.phoneNumber } });
+        return res.status(200).json({ status: "true", message: "Login successful", user: userODM(user) });
     } catch (error) {
         return res.status(400).json({ status: "false", message: error.message });
     }
-};
+}
